@@ -1,0 +1,83 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+
+public class Person
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Address { get; set; }
+    public DateTime BirthDate { get; set; }
+}
+
+namespace neginmoradi_OS_HW3 
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Person> persons = new List<Person>();
+
+            Console.WriteLine("What do you want to do?");
+            Console.WriteLine("1. Add new person.");
+            Console.WriteLine("Other keys: Quit");
+            int choice = int.Parse(Console.ReadLine());
+
+            while(choice == 1) {
+                    Console.WriteLine("Enter first name:");
+                    string firstName = Console.ReadLine();
+                    Console.WriteLine("Enter last name:");
+                    string lastName = Console.ReadLine();
+                    Console.WriteLine("Enter phone number:");
+                    string phoneNumber = Console.ReadLine();
+                    Console.WriteLine("Enter address:");
+                    string address = Console.ReadLine();
+                    Console.WriteLine("Enter birth date (yyyy-MM-dd):");
+                    DateTime birthDate = DateTime.Parse(Console.ReadLine());
+
+                    //create a new Person object
+                    Person newPerson = new Person
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        PhoneNumber = phoneNumber,
+                        Address = address,
+                        BirthDate = birthDate
+                    };
+
+                    //add the new person to the list
+                    persons.Add(newPerson);
+
+                Console.WriteLine("What do you want to do?");
+                Console.WriteLine("1. Add new person.");
+                Console.WriteLine("Other keys: Quit");
+                choice = int.Parse(Console.ReadLine());
+            }
+
+            //serialize the list to JSON
+            string json = JsonConvert.SerializeObject(persons, Formatting.Indented);
+
+            //write the JSON to a file
+            File.WriteAllText("persons.json", json);
+
+            //read the JSON from the file
+            string jsonFromFile = File.ReadAllText("persons.json");
+
+            //deserialize the JSON back to a list of Persons
+            List<Person> personsFromFile = JsonConvert.DeserializeObject<List<Person>>(jsonFromFile);
+
+            //add the deserialized persons to the list
+            persons.AddRange(personsFromFile);
+
+            //print the list of persons
+            foreach (var person in persons)
+            {
+                Console.WriteLine($"Name: {person.FirstName} {person.LastName}, Phone Number: {person.PhoneNumber}, Address: {person.Address}, Birth Date: {person.BirthDate.ToString("yyyy-MM-dd")}\n");
+            }
+
+            Console.WriteLine("Operation finished!");
+        }
+    }
+}
