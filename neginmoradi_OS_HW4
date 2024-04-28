@@ -1,0 +1,28 @@
+using System;
+using System.Net;
+
+namespace neginmoradi_OS_HW4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] urls = { "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1344922523i/1953.jpg",
+                "https://cdn.britannica.com/45/181345-050-189BA6B8/Fyodor-Dostoyevsky-1876.jpg" };
+
+            foreach (string url in urls)
+            {
+                using (WebClient client = new WebClient())
+                {
+                    string fileName = url.Substring(url.LastIndexOf("/") + 1);
+
+                    Console.WriteLine($"Downloading {fileName}...");
+
+                    client.DownloadFile(url, fileName);
+
+                    Console.WriteLine($"{fileName} downloaded successfully.");
+                }
+            }
+        }
+    }
+}
