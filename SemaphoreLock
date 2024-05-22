@@ -1,0 +1,29 @@
+using System.Threading;
+
+namespace neginmoradi_OS_HW6
+{
+    internal class SemaphoreLock
+    {
+        private readonly Semaphore semaphore;
+
+        public SemaphoreLock(int initialCount, int maximumCount)
+        {
+            semaphore = new Semaphore(initialCount, maximumCount);
+        }
+
+        public void Enter()
+        {
+            semaphore.WaitOne(); //acquire a semaphore slot
+        }
+
+        public void Exit()
+        {
+            semaphore.Release(); //release a semaphore slot
+        }
+
+        public void Dispose()
+        {
+            semaphore.Dispose(); //release resources
+        }
+    }
+}
