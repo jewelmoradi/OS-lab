@@ -1,0 +1,31 @@
+namespace neginmoradi_OS_HW6
+{
+    public class AutoResetEvent
+    {
+        //This class provides the functionality of an AutoResetEvent
+        //calling the Set() method will signal waiting threads
+        //calling the WaitOne() method will block the calling thread until the event is set
+
+        private System.Threading.AutoResetEvent autoResetEvent;
+
+        public AutoResetEvent(bool initialState)
+        {
+            autoResetEvent = new System.Threading.AutoResetEvent(initialState);
+        }
+
+        public void Set()
+        {
+            autoResetEvent.Set(); //set to signaled state
+        }
+
+        public void WaitOne()
+        {
+            autoResetEvent.WaitOne(); //set to non-signaled state
+        }
+
+        public void Reset()
+        {
+            autoResetEvent.Reset(); //set back to non-signaled state
+        }
+    }
+}
