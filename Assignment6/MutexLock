@@ -1,0 +1,29 @@
+using System.Threading;
+
+namespace neginmoradi_OS_HW6
+{
+    internal class MutexLock
+    {
+        private readonly Mutex mutex;
+
+        public MutexLock()
+        {
+            mutex = new Mutex();
+        }
+
+        public void Enter()
+        {
+            mutex.WaitOne(); //acquire the lock
+        }
+
+        public void Exit()
+        {
+            mutex.ReleaseMutex(); //release the lock
+        }
+
+        public void Dispose()
+        {
+            mutex.Dispose(); //release resources
+        }
+    }
+}

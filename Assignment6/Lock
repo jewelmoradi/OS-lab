@@ -1,0 +1,18 @@
+namespace neginmoradi_OS_HW6
+{
+    //By using this Lock class, you can prevent multiple threads from accessing critical sections of code concurrently
+    internal class Lock
+    {
+        private object lockObjectLock = new object();
+
+        public void Enter()
+        {
+            System.Threading.Monitor.Enter(lockObjectLock); //acquires the lock on the lockObject
+        }
+
+        public void Exit()
+        {
+            System.Threading.Monitor.Exit(lockObjectLock); //releases the lock
+        }
+    }
+}

@@ -1,0 +1,68 @@
+using System;
+using System.Threading;
+
+namespace neginmoradi_OS_HW6
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+
+        static void LockTest()
+        {
+            Lock lockObject = new Lock();
+
+            lockObject.Enter();
+            Console.WriteLine("Lock acquired");
+            Thread.Sleep(2000); //simulate some work
+            lockObject.Exit();
+            Console.WriteLine("Lock released");
+        }
+
+        static void MonitorTest()
+        {
+            object lockObject = new object();
+
+            lock (lockObject)
+            {
+                Console.WriteLine("Monitor acquired");
+                Thread.Sleep(2000); //simulate some work
+            }
+            Console.WriteLine("Monitor released");
+        }
+
+        static void SemaphoreTest()
+        {
+            SemaphoreLock semaphore = new SemaphoreLock(2, 2);
+
+            semaphore.Enter();
+            Console.WriteLine("Semaphore slot acquired");
+            Thread.Sleep(2000); //simulate some work
+            semaphore.Exit();
+            Console.WriteLine("Semaphore slot released");
+        }
+
+        static void MutexTest()
+        {
+            MutexLock mutex = new MutexLock();
+
+            mutex.Enter();
+            Console.WriteLine("Mutex acquired");
+            Thread.Sleep(2000); //simulate some work
+            mutex.Exit();
+            Console.WriteLine("Mutex released");
+        }
+
+        static void AutoResetEventTest()
+        {
+            AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+
+            autoResetEvent.Set();
+            Console.WriteLine("AutoResetEvent set");
+            Thread.Sleep(2000); // Simulate some work
+            autoResetEvent.Reset();
+            Console.WriteLine("AutoResetEvent reset");
+        }
+    }
+}

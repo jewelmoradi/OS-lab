@@ -1,0 +1,20 @@
+namespace neginmoradi_OS_HW6
+{
+    internal class Monitor
+    {
+        //The lock keyword provides automatic locking and unlocking of a specified object
+        //while the Monitor class requires explicit calls to acquire and release locks
+
+        private object lockObject = new object();
+
+        public void Enter()
+        {
+            System.Threading.Monitor.Enter(lockObject);
+        }
+
+        public void Exit()
+        {
+            System.Threading.Monitor.Exit(lockObject);
+        }
+    }
+}
