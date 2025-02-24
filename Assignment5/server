@@ -1,0 +1,47 @@
+using System;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+
+namespace neginmoradi_OS_HW5_server
+{
+    internal class Program
+    {
+        static TcpListener tcpServer;
+
+        static void Main(string[] args)
+        {
+            StartServer();
+        }
+
+        public static void StartServer()
+        {
+            IPAddress address = IPAddress.Parse("127.0.0.1");
+            tcpServer = new TcpListener(address, 5000);
+            tcpServer.Start();
+
+            Console.WriteLine("Server started. Waiting for clients...");
+
+            while (true)
+            {
+                TcpClient tcpClient = tcpServer.AcceptTcpClient();
+                Console.WriteLine("New client connected.");
+
+                HandleClient(tcpClient);
+            }
+        }
+
+        public static void HandleClient(TcpClient client)
+        {
+            using (NetworkStream net = client.GetStream())
+            {
+                string location = "file.txt";
+                byte[] file = File.ReadAllBytes(location);
+                net.Write(file, 0, file.Length);
+                net.Flush();
+            }
+
+            client.Close();
+        }
+    }
+}
