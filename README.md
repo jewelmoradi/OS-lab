@@ -1,1 +1,3 @@
-# neginmoradi_OS_project
+# OS lab project
+
+A salary management system
