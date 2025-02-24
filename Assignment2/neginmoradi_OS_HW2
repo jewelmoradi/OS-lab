@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace neginmoradi_OS_HW2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string usbDrive = "H:\\"; //drive letter of USB flash drive
+            Console.WriteLine("Enter your USB device...");
+
+            while (!DriveExists(usbDrive))
+            {
+                System.Threading.Thread.Sleep(1000); //wait for 1 second before checking again
+            }
+
+            Console.WriteLine("USB device inserted. Opening mspaint...");
+
+            if (Directory.Exists(usbDrive))
+            {
+                var watcher = new FileSystemWatcher();
+                watcher.Path = usbDrive;
+
+                if (File.Exists(@"C:\Windows\System32\mspaint.exe"))
+                {
+                        Process.Start(@"C:\Windows\System32\mspaint.exe");
+                        Console.WriteLine("mspaint opened successfully!");
+                }
+
+                Console.WriteLine("Press 'q' to quit the program.");
+                while (Console.Read() != 'q') ;
+            }
+            else
+            {
+                Console.WriteLine("Error: USB drive path is not valid or accessible.");
+            }
+        }
+
+        private static bool DriveExists(string drive)
+        {
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+            foreach (DriveInfo d in allDrives)
+            {
+                if (d.Name == drive)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+}
